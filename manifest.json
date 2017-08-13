@@ -1,0 +1,32 @@
+{
+	"author": "Gerasimov Ruslan",
+	"background": {
+		"persistent": true,
+		"scripts": [
+			"background.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"css": [],
+			"js": [
+				"content.js"
+			],
+			"matches": [
+				"*://*/*"
+			]
+		}
+	],
+	"description": "chrome-ex example",
+	"icons": {},
+	"manifest_version": 2,
+	"name": "chrome-ex example",
+	"permissions": [
+		"tabs"
+	],
+	"version": "2.0.0",
+	"commands": {},
+	"web_accessible_resources": [
+		"include.js"
+	]
+}
