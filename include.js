@@ -141,19 +141,20 @@ function promisify(fn) {
   };
 }
 
-
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const CONTENT = 0;
+const id = 1502896887588.695 || "";
+
+const CONTENT = `content${id}`;
 /* harmony export (immutable) */ __webpack_exports__["b"] = CONTENT;
 
-const INCLUDE = 1;
+const INCLUDE = `include${id}`;
 /* harmony export (immutable) */ __webpack_exports__["d"] = INCLUDE;
 
-const BACKGROUND = 2;
+const BACKGROUND = `background${id}`;
 /* harmony export (immutable) */ __webpack_exports__["a"] = BACKGROUND;
 
 
@@ -162,7 +163,6 @@ const INCLUDE_SEND = `chromex--${INCLUDE}--send-message`;
 
 const CONTENT_SEND = `chromex--${CONTENT}--send-message`;
 /* harmony export (immutable) */ __webpack_exports__["c"] = CONTENT_SEND;
-
 
 
 /***/ }),
@@ -211,18 +211,11 @@ class Channel {
 
     const resultHandle = type => {
       return result => {
-        return self.send(
-          { result, deferred: { id: deferred.id, type } },
-          from,
-          undefined,
-          port
-        );
+        return self.send({ result, deferred: { id: deferred.id, type } }, from, undefined, port);
       };
     };
 
-    return __WEBPACK_IMPORTED_MODULE_1__handler__["a" /* default */].callHandler(handler, data)
-      .then(resultHandle("resolve"))
-      .catch(resultHandle("reject"));
+    return __WEBPACK_IMPORTED_MODULE_1__handler__["a" /* default */].callHandler(handler, data).then(resultHandle("resolve")).catch(resultHandle("reject"));
   }
 
   /**
@@ -233,13 +226,10 @@ class Channel {
     const deferred = new __WEBPACK_IMPORTED_MODULE_0__deferred__["a" /* default */]();
     return __WEBPACK_IMPORTED_MODULE_1__handler__["a" /* default */].callHandler(handler, {
       args
-    })
-      .then(deferred.resolve)
-      .catch(deferred.reject);
+    }).then(deferred.resolve).catch(deferred.reject);
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Channel;
-
 
 
 /***/ }),
@@ -268,14 +258,12 @@ class ChannelHandler {
 /**
    * @param {ChannerlHanlder} handler
    */
-ChannelHandler.addHandler = handler =>
-  (handlers[handler.name] = handler.handler);
+ChannelHandler.addHandler = handler => handlers[handler.name] = handler.handler;
 
 /**
    * @param {Array} handlers
    */
-ChannelHandler.addHandlers = (...handlers) =>
-  handlers.forEach(ChannelHandler.addHandler);
+ChannelHandler.addHandlers = (...handlers) => handlers.forEach(ChannelHandler.addHandler);
 
 /**
    * @param {ChannerlHanlder} handler
@@ -295,7 +283,6 @@ ChannelHandler.callHandler = (handler, data) => {
   return handlerFunc(data);
 };
 
-
 /***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -307,12 +294,9 @@ ChannelHandler.callHandler = (handler, data) => {
  * @param {any} el
  * @return {any}
  */
-const triggerCustomEvent = (eventType, data, el = window.document) =>
-  el.dispatchEvent(
-    new CustomEvent(eventType, {
-      detail: data
-    })
-  );
+const triggerCustomEvent = (eventType, data, el = window.document) => el.dispatchEvent(new CustomEvent(eventType, {
+  detail: data
+}));
 /* harmony export (immutable) */ __webpack_exports__["b"] = triggerCustomEvent;
 
 
@@ -322,10 +306,8 @@ const triggerCustomEvent = (eventType, data, el = window.document) =>
  * @param {any} el
  * @return {any}
  */
-const bindCustomEvent = (type, handler, el = window.document) =>
-  el.addEventListener(type, handler);
+const bindCustomEvent = (type, handler, el = window.document) => el.addEventListener(type, handler);
 /* harmony export (immutable) */ __webpack_exports__["a"] = bindCustomEvent;
-
 
 
 /***/ }),
@@ -350,7 +332,6 @@ const bindCustomEvent = (type, handler, el = window.document) =>
 
 
 __WEBPACK_IMPORTED_MODULE_4__deferred__["a" /* default */].promisify = __WEBPACK_IMPORTED_MODULE_4__deferred__["b" /* promisify */];
-
 
 
 
@@ -472,9 +453,7 @@ class BackgroundChannel extends __WEBPACK_IMPORTED_MODULE_1__channel__["a" /* de
      * @return {Promise<any>}
      */
   send2All(data, to) {
-    return Promise.all(
-      ports.all(port => this.send(data, to, __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* BACKGROUND */], port))
-    );
+    return Promise.all(ports.all(port => this.send(data, to, __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* BACKGROUND */], port)));
   }
 
   /**
@@ -510,7 +489,6 @@ class BackgroundChannel extends __WEBPACK_IMPORTED_MODULE_1__channel__["a" /* de
 /* harmony export (immutable) */ __webpack_exports__["a"] = BackgroundChannel;
 
 
-
 /***/ }),
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -543,7 +521,7 @@ class ContentChannel extends __WEBPACK_IMPORTED_MODULE_2__channel__["a" /* defau
 
     this.port = window.chrome.runtime.connect();
     this.port.onMessage.addListener(this.onMessage.bind(this));
-    this.port.onDisconnect.addListener(() => (disconnected = true));
+    this.port.onDisconnect.addListener(() => disconnected = true);
   }
 
   /**
@@ -624,7 +602,6 @@ class ContentChannel extends __WEBPACK_IMPORTED_MODULE_2__channel__["a" /* defau
 /* harmony export (immutable) */ __webpack_exports__["a"] = ContentChannel;
 
 
-
 /***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -650,9 +627,7 @@ class IncludeChannel extends __WEBPACK_IMPORTED_MODULE_2__channel__["a" /* defau
      * @return {any}
      */
   connect() {
-    return Object(__WEBPACK_IMPORTED_MODULE_1__helpers__["a" /* bindCustomEvent */])(__WEBPACK_IMPORTED_MODULE_0__constants__["c" /* CONTENT_SEND */], e =>
-      this.onMessage(JSON.parse(e.detail) || {})
-    );
+    return Object(__WEBPACK_IMPORTED_MODULE_1__helpers__["a" /* bindCustomEvent */])(__WEBPACK_IMPORTED_MODULE_0__constants__["c" /* CONTENT_SEND */], e => this.onMessage(JSON.parse(e.detail) || {}));
   }
 
   /**
@@ -702,7 +677,6 @@ class IncludeChannel extends __WEBPACK_IMPORTED_MODULE_2__channel__["a" /* defau
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = IncludeChannel;
-
 
 
 /***/ }),
